@@ -30,8 +30,10 @@ def index():
                 research=0
             filename = 'finalized_model.pickle'
             loaded_model = pickle.load(open(filename, 'rb')) # loading the model file from the storage
+            scalern = 'scalern.pickle'
+            scaler_model = pickle.load(open(scalern, 'rb'))
             # predictions using the loaded model file
-            prediction=loaded_model.predict([[gre_score,toefl_score,university_rating,sop,lor,cgpa,research]])
+            prediction=loaded_model.predict(scaler_model.transform([[gre_score,toefl_score,university_rating,sop,lor,cgpa,research]]))
             print('prediction is', prediction)
             # showing the prediction results in a UI
             return render_template('results.html',prediction=round(100*prediction[0]))
